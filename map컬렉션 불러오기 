@@ -1,0 +1,25 @@
+package Menu;
+
+import java.util.Map;
+import java.util.Set;
+
+import Cafe.Ingredients;
+
+public class Americano extends Menu{
+	public Americano() {
+		this.price = 1500;
+	}
+
+	@Override
+	public void outIngredients() {
+		Map<String, Integer>  ingredients = Ingredients.getInstance();
+		
+		int price =  ingredients.get("원두");
+		System.out.println(price);
+		
+		
+	}
+
+
+
+}

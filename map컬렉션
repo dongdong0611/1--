@@ -1,0 +1,32 @@
+package Cafe;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+
+
+public class Ingredients {
+	private static Ingredients ingredients = new Ingredients();
+	
+	
+	private Ingredients() {} 
+	
+	public static  Map<String, Integer> getInstance() {
+		//Map 컬렉션 생성 
+		Map<String, Integer> map = new HashMap<>();
+		
+		//객체 저장 
+		map.put("원두", 1000);
+		map.put("우유", 1000);
+		map.put("초콜릿시럽", 100);
+		map.put("바닐라시럽", 100);
+		map.put("얼음", 1000);
+		map.put("딸기", 100);
+		map.put("망고", 30);
+
+		
+		return map;
+	}
+
+}
