@@ -338,7 +338,7 @@ class Cafe{
         while (flag) {
 			System.out.println("재고현황");
 			for(int j=0; j<menuNameList.size(); j++) {
-				System.out.println((j+1)+"."+ menuNameList.get(j)+"  남은갯수 :  " + inventoryList.get(j)+"잔");
+				System.out.println((j+1)+"."+ menuNameList.get(j)+"  남은갯수 :  " + inventoryList.get(j)+"개");
 			}
         	System.out.println("-----------------------");
 			System.out.println("수량추가 할 메뉴를 선택해주세요.>>");
@@ -349,15 +349,15 @@ class Cafe{
 				System.out.println("없는 메뉴입니다. 다시 선택하세요.");
 				break;
 			}
-			System.out.println("수량추가 수를 선택해주세요>>");
+			System.out.println("수량추가 갯수를 선택해주세요>>");
 			int addNo = sc.nextInt();
 			if (addNo <= 0) {
 				System.out.println("추가 불가능한 수 입니다. 다시 선택하세요");
 				break;
 			}
 			inventoryList.set(selectNo-1, inventoryList.get(selectNo-1)+addNo);
-			System.out.println("추가하신 개수는 " + addNo +"잔 입니다.");
-			System.out.println(menuNameList.get(selectNo-1)+"의 개수는 "+inventoryList.get(selectNo-1) +"잔 입니다");
+			System.out.println("추가하신 개수는 " + addNo +"개입니다.");
+			System.out.println(menuNameList.get(selectNo-1)+"의 개수는 "+inventoryList.get(selectNo-1) +"개입니다");
 		flag = false;
         	break;
 		}
