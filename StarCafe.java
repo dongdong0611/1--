@@ -360,7 +360,8 @@ public void addOrder() {
 			inventoryList.set(selectNo-1, inventoryList.get(selectNo-1)+addNo);
 			System.out.println("추가하신 개수는 " + addNo +"잔입니다.");
 			System.out.println(menuNameList.get(selectNo-1)+"의 개수는"+inventoryList.get(selectNo-1) +"잔 입니다");
-				
+			flag = false;
+			break;
 				}
 
   }
