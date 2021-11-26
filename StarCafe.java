@@ -36,10 +36,6 @@ class Cafe{
 
     //1.회원생성
     private static void accountrCreate() {
-    	if(customerNameList.size() == 0) {
-    		System.out.println("현재 회원이 없습니다.");
-    		return;
-    	}
 		System.out.println("-------------------");
 		System.out.println("회원등록");
 		System.out.println("-------------------");
@@ -59,6 +55,10 @@ class Cafe{
 	}
     //2.금액충전
     private static void moneyCharge() {
+    	if(customerNameList.size() == 0) {
+    		System.out.println("현재 회원이 없습니다.");
+    		return;
+    	}
     	System.out.println("-------------------");
 		System.out.println("금액충전");
 		System.out.println("-------------------");
@@ -90,6 +90,10 @@ class Cafe{
 
     //3.금액확인
     public void accountSee() {
+    	if(customerNameList.size() == 0) {
+    		System.out.println("현재 회원이 없습니다.");
+    		return;
+    	}
 		System.out.println("고객성함>>>"); 
 		customerName = scanner.next();
     	int x=0;
@@ -109,7 +113,7 @@ class Cafe{
 	}
     
     
-    //4.회원생성
+    //4.메뉴선택
     public void checkCustomer() {
     	if(customerNameList.size() == 0) {
     		System.out.println("현재 회원이 없습니다.");
@@ -451,8 +455,8 @@ public void addOrder() {
 		menuNameList.add("바나나라떼");
 		menuPriceList.add(5000);
 		inventoryList.add(15);
-		customerNameList.add("홍길동");
-		customerAccountList.add(10000);
+//		customerNameList.add("홍길동");
+//		customerAccountList.add(10000);
     } 
 //	처음시작할때 업체용인지 고객용인지 확인하기 위함
     public void who() {
