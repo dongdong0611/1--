@@ -326,26 +326,38 @@ public void addOrder() {
 	
 	//2.수량추가
 	public void addItem() {
-		int x=0;
-		System.out.println("수량을 추가할 메뉴의 이름을 입력해주세요.>>");
-		menuName = scanner.next();
-
-		for(int i=0; i<menuNameList.size(); i++){
-			if(menuNameList.get(i).equals(menuName)){
-				System.out.print("재고 추가 수: ");
-				inventory = scanner.nextInt();
-				inventoryList.set(i,inventoryList.get(i)+inventory);		
-				System.out.println(menuNameList.get(i)+"의 개수는"+inventoryList.get(i) +"개 입니다");
+		if (menuNameList.size() <= 0) {
+			System.out.println("현재 메뉴가 없습니다.");
+			return;
+		}
+		java.util.Scanner sc = new java.util.Scanner(System.in);
+    	boolean flag = true;
+        while (flag) {
+			System.out.println("메뉴판");
+			for(int j=0; j<menuNameList.size(); j++) {
+				System.out.println((j+1)+"."+ menuNameList.get(j)+"  가격 :  " + menuPriceList.get(j)+"원");
+			}
+			System.out.println("--------------------------------------");
+			System.out.println("수량추가 할 메뉴를 선택해주세요.>>");
+			int selectNo=0;
+			selectNo = sc.nextInt();
+			if(menuNameList.size() <= (selectNo-1)) {
+				selectNo=0;
+				System.out.println("없는 메뉴입니다. 다시 선택하세요.");
 				break;
 			}
-				else {
-					x++;
-				continue;
+			System.out.println("수량추가 수를 선택해주세요>>");
+			int addNo = sc.nextInt();
+			if (addNo <= 0) {
+				System.out.println("추가 불가능한 수 입니다. 다시 선택하세요");
+				break;
 			}
-		}
-		if(x==menuNameList.size()){
-			System.out.println(menuName+" 는 없는 메뉴입니다.");
-		}
+			inventoryList.set(selectNo-1, inventoryList.get(selectNo-1)+addNo);
+			System.out.println("추가하신 개수는 " + addNo +"잔입니다.");
+			System.out.println(menuNameList.get(selectNo-1)+"의 개수는"+inventoryList.get(selectNo-1) +"잔 입니다");
+				
+				}
+
   }
 
 	//3.남은 재고 확인
@@ -455,8 +467,8 @@ public void addOrder() {
 		menuNameList.add("바나나라떼");
 		menuPriceList.add(5000);
 		inventoryList.add(15);
-//		customerNameList.add("홍길동");
-//		customerAccountList.add(10000);
+		customerNameList.add("홍길동");
+		customerAccountList.add(10000);
     } 
 //	처음시작할때 업체용인지 고객용인지 확인하기 위함
     public void who() {
