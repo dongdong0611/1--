@@ -110,6 +110,10 @@ class Cafe{
 	
     //4.메뉴선택
     public void checkCustomer() {
+    	if (customerNameList.size() == 0) {
+    		System.out.println("고객이 없습니다.");
+    		return;
+    	}
     	java.util.Scanner sc = new java.util.Scanner(System.in);
     	boolean flag = true;
         while (flag) {
@@ -124,8 +128,8 @@ class Cafe{
     				flag = false;
     				break;
     			} 	
-    			System.out.println("없는 고객입니다. 다시 입력해주세요.");
-    		}
+    			
+    		}System.out.println("없는 고객입니다. 다시 입력해주세요.");
 
         }
     }
@@ -448,6 +452,11 @@ class Cafe{
 		menuNameList.add("바나나라떼");
 		menuPriceList.add(5000);
 		inventoryList.add(15);
+		customerNameList.add("홍길동");
+		customerAccountList.add(10000);
+		customerNameList.add("박병태");
+		customerAccountList.add(20000);
+		
     } 
 //	처음시작할때 업체용인지 고객용인지 확인하기 위함
     public void who() {
