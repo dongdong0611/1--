@@ -204,7 +204,7 @@ public void addOrder() {
 			System.out.println("메뉴를 선택해주세요.>>");
 			int selectNo=0;
 			selectNo = sc.nextInt();
-			if(menuNameList.size() <= (selectNo-1)) {
+			if(menuNameList.size() <= (selectNo-1) || selectNo < 1) {
 				selectNo=0;
 				System.out.println("없는 메뉴입니다. 다시 선택하세요.");
 				break;
@@ -253,7 +253,7 @@ public void addOrder() {
  			System.out.println("빼실 메뉴를 선택해주세요.>>");
  			int selectNo=0;
  			selectNo = sc.nextInt();
- 			if(orderMenuName.size() <= (selectNo-1)) {
+ 			if(orderMenuName.size() <= (selectNo-1) || selectNo < 1) {
 				selectNo=0;
 				System.out.println("없는 메뉴입니다. 다시 선택하세요.");
 				continue;
@@ -341,7 +341,7 @@ public void addOrder() {
 			System.out.println("수량추가 할 메뉴를 선택해주세요.>>");
 			int selectNo=0;
 			selectNo = sc.nextInt();
-			if(menuNameList.size() <= (selectNo-1)) {
+			if(menuNameList.size() <= (selectNo-1) || selectNo < 1) {
 				selectNo=0;
 				System.out.println("없는 메뉴입니다. 다시 선택하세요.");
 				break;
