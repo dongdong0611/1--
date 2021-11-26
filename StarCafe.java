@@ -36,9 +36,9 @@ class Cafe{
 
     //1.회원생성
     private static void accountrCreate() {
-    	System.out.println("--------------------");
+		System.out.println("-------------------");
 		System.out.println("회원등록");
-    	System.out.println("--------------------");
+		System.out.println("-------------------");
 
 		System.out.print("회원님의 이름을 적어주세요: "); 
 		customerName = scanner.next();
@@ -55,9 +55,13 @@ class Cafe{
 	}
     //2.금액충전
     private static void moneyCharge() {
-    	System.out.println("--------------------");
+    	if(customerNameList.size() == 0) {
+    		System.out.println("현재 회원이 없습니다.");
+    		return;
+    	}
+    	System.out.println("-------------------");
 		System.out.println("금액충전");
-    	System.out.println("--------------------");
+		System.out.println("-------------------");
 		System.out.print("이름 : "); 
 		customerName = scanner.next();
 		int x=0;
@@ -86,6 +90,10 @@ class Cafe{
 
     //3.금액확인
     public void accountSee() {
+    	if(customerNameList.size() == 0) {
+    		System.out.println("현재 회원이 없습니다.");
+    		return;
+    	}
 		System.out.println("고객성함>>>"); 
 		customerName = scanner.next();
     	int x=0;
@@ -105,13 +113,19 @@ class Cafe{
 	}
     
     
-    //3.고객확인
+    //4.메뉴선택
     public void checkCustomer() {
+    	if(customerNameList.size() == 0) {
+    		System.out.println("현재 회원이 없습니다.");
+    		return;
+    	}
     	java.util.Scanner sc = new java.util.Scanner(System.in);
     	boolean flag = true;
         while (flag) {
         	System.out.print("고객성함: "); 
-    		customerName = scanner.next();
+    		customerName = sc.next();
+    		System.out.println(customerName.indexOf(customerName));
+    		System.out.println(customerNameList.size());
     		for(int i=0; i<customerNameList.size(); i++){
     			if(customerNameList.get(i).equals(customerName)) {
     				System.out.println(customerNameList.get(i)+" 님의 잔액은"+ customerAccountList.get(i)+" 원 입니다.");
@@ -121,9 +135,10 @@ class Cafe{
     				flag = false;
     				break;
     			} 	
-    			System.out.println("없는 고객입니다. 다시 입력해주세요.");
-    
-    		}
+    			
+    		} System.out.println("없는 고객입니다. 다시 입력해주세요.");  
+    		
+    		
         }
     }
     
@@ -131,14 +146,10 @@ class Cafe{
 		java.util.Scanner sc = new java.util.Scanner(System.in);
     	boolean flag = true;
         while (flag) {
-        	System.out.println("--------------------");
+        	System.out.println("*********************");
         	System.out.println("메뉴주문");
-            System.out.println("1.장바구니에 메뉴추가" );
-            System.out.println("2.장바구니에서 메뉴빼기" );
-            System.out.println("3.장바구니 확인" );
-            System.out.println("4.계산" );
-            System.out.println("5.취소" );
-        	System.out.println("--------------------");
+            System.out.println("1.장바구니에 메뉴추가 2.장바구니에서 메뉴빼기 3.장바구니 확인 4.계산 5.취소" );
+        	System.out.println("*********************");
             String stringInput = sc.nextLine();
             switch (stringInput) {
             case "1":
@@ -152,14 +163,12 @@ class Cafe{
             	break;
            case "4":
               checkOrder();				//계산
-              System.out.println("이대로 결제하시겠습니까?");
-              System.out.println("1.네 2.아니오");
+              System.out.println("이대로 결제하시겠습니까? 1.네 2. 아니오");  
               String finalInput = sc.nextLine();
               switch (finalInput) {
               case "1":
-            	  customerAccountList.set(orderCustomerIndex, 
-            			  customerAccountList.get(orderCustomerIndex)-orderMenuPrice.stream().mapToInt(Integer::intValue).sum());
-            	  saleMoney +=  orderMenuPrice.stream().mapToInt(Integer::intValue).sum();
+	          saleMoney +=  orderMenuPrice.stream().mapToInt(Integer::intValue).sum();
+            	  customerAccountList.set(orderCustomerIndex, customerAccountList.get(orderCustomerIndex)-orderMenuPrice.stream().mapToInt(Integer::intValue).sum());
             	  System.out.println("결제가 완료되었습니다.");
             	  System.out.println("현재 남은 잔액은 " + customerAccountList.get(orderCustomerIndex)+"원 입니다." );
             	  System.out.println("감사합니다.");
@@ -175,9 +184,9 @@ class Cafe{
               } 
               break;
            case "5":
-		    System.out.println("안녕히가세요");	
+        	    System.out.println("안녕히가세요");
         	    flag = false;
-		    break;
+        	    break;
            default:
                 System.out.println("잘못된 입력입니다");
             }
@@ -185,7 +194,10 @@ class Cafe{
 		}		
    
 	//4.1 메뉴추가
-	public void addOrder() {
+public void addOrder() {
+		if (orderMenuPrice.size() <= 0) {
+			orderMenuPrice.add(0);
+		}
 		java.util.Scanner sc = new java.util.Scanner(System.in);
     	boolean flag = true;
         while (flag) {
@@ -193,12 +205,20 @@ class Cafe{
 			for(int j=0; j<menuNameList.size(); j++) {
 				System.out.println((j+1)+"."+ menuNameList.get(j)+"  가격 :  " + menuPriceList.get(j)+"원");
 			}
-			System.out.println("----------------");
+			System.out.println("--------------------------------------");
 			System.out.println("메뉴를 선택해주세요.>>");
 			int selectNo=0;
 			selectNo = sc.nextInt();
-			
-				if(inventoryList.get(selectNo-1)>0 && orderMenuPrice.stream().mapToInt(Integer::intValue).sum()+menuPriceList.get(selectNo-1) <= orderCustomerAccount) {
+			if(menuNameList.size() <= (selectNo-1) || selectNo < 1) {
+				selectNo=0;
+				System.out.println("없는 메뉴입니다. 다시 선택하세요.");
+				break;
+			}
+
+					if(inventoryList.get(selectNo-1)>0 && orderMenuPrice.stream().mapToInt(Integer::intValue).sum()+menuPriceList.get(selectNo-1) <= orderCustomerAccount) {	
+						if (orderMenuPrice.get(0) == 0) {
+								orderMenuPrice.remove(0);
+							}
 							orderMenuName.add(menuNameList.get(selectNo-1));
 							orderMenuPrice.add(menuPriceList.get(selectNo-1));
 							inventoryList.set(selectNo-1, inventoryList.get(selectNo-1)-1);
@@ -215,7 +235,7 @@ class Cafe{
 							System.out.println("잔액이 부족합니다.");
 							flag = false;
 							break;
-						}
+						} 
 				}
 				
 				
@@ -234,10 +254,15 @@ class Cafe{
  				System.out.println((j+1)+"."+ orderMenuName.get(j)+"  가격 :  " + orderMenuPrice.get(j)+"원");
  			}
  			System.out.println("현재 장바구니 결제금액은 총 " + orderMenuPrice.stream().mapToInt(Integer::intValue).sum()+"원 입니다.");
- 			System.out.println("-------------------");
+ 			System.out.println("--------------------------------------");
  			System.out.println("빼실 메뉴를 선택해주세요.>>");
  			int selectNo=0;
  			selectNo = sc.nextInt();
+ 			if(orderMenuName.size() <= (selectNo-1) || selectNo < 1) {
+				selectNo=0;
+				System.out.println("없는 메뉴입니다. 다시 선택하세요.");
+				continue;
+			}
  				System.out.println(orderMenuName.get(selectNo-1)+"를 장바구니에서 뺐습니다.");
  				inventoryList.set(menuNameList.indexOf(orderMenuName.get(selectNo-1)), inventoryList.get(selectNo-1)+1); 
  				orderMenuName.remove(orderMenuName.get(selectNo-1));
@@ -263,7 +288,7 @@ class Cafe{
  				System.out.println((j+1)+"."+ orderMenuName.get(j)+"  가격 :  " + orderMenuPrice.get(j)+"원");
  			}
  			System.out.println("현재 장바구니 결제금액은 총 " + orderMenuPrice.stream().mapToInt(Integer::intValue).sum()+"원 입니다.");
- 			System.out.println("----------------------");
+ 			System.out.println("--------------------------------------");
  			return;
  			} else {
   			System.out.println("현재 장바구니에 아무것도 없습니다.");
@@ -317,7 +342,7 @@ class Cafe{
 			for(int j=0; j<menuNameList.size(); j++) {
 				System.out.println((j+1)+"."+ menuNameList.get(j)+"  가격 :  " + menuPriceList.get(j)+"원");
 			}
-        	System.out.println("-----------------------");
+			System.out.println("--------------------------------------");
 			System.out.println("수량추가 할 메뉴를 선택해주세요.>>");
 			int selectNo=0;
 			selectNo = sc.nextInt();
@@ -335,10 +360,10 @@ class Cafe{
 			inventoryList.set(selectNo-1, inventoryList.get(selectNo-1)+addNo);
 			System.out.println("추가하신 개수는 " + addNo +"잔입니다.");
 			System.out.println(menuNameList.get(selectNo-1)+"의 개수는"+inventoryList.get(selectNo-1) +"잔 입니다");
-        	System.out.println("-----------------------");
+				
 				}
-  }
 
+  }
 
 	//3.남은 재고 확인
 	public void stock() {
@@ -352,6 +377,10 @@ class Cafe{
 	}
 	//5.고객명단
 	public void customerList() {
+		if(customerNameList.size() == 0) {
+    		System.out.println("현재 회원이 없습니다.");
+    		return;
+    	}
 		for(int i=0;i<customerNameList.size();i++){
 			System.out.println(customerNameList.get(i)+ ", "+ customerAccountList.get(i) +"원");
 		}
@@ -366,14 +395,10 @@ class Cafe{
     	java.util.Scanner sc = new java.util.Scanner(System.in);
     	boolean flag = true;
         while (flag) {
-        	System.out.println("--------------------");
+        	System.out.println("*********************");
             System.out.println("어떤 업무를 선택하시겠습니까?");
-            System.out.println("1.회원등록");
-            System.out.println("2.금액충전하기");
-            System.out.println("3.금액확인하기");
-            System.out.println("4.메뉴선택");
-            System.out.println("5.취소");
-        	System.out.println("--------------------");
+            System.out.println("1.회원등록 2.금액충전하기 3.금액확인하기  4.메뉴선택 5.취소");
+        	System.out.println("*********************");
             String stringInput = sc.nextLine();          
             switch (stringInput) {
             case "1":
@@ -402,7 +427,7 @@ class Cafe{
     	java.util.Scanner sc = new java.util.Scanner(System.in);
     	boolean flag = true;
         while (flag) {
-        	System.out.println("--------------------");
+        	System.out.println("*********************");
             System.out.println("어떤 업무를 선택하시겠습니까?");
             System.out.println("1.메뉴등록");
             System.out.println("2.수량추가");
@@ -410,7 +435,7 @@ class Cafe{
             System.out.println("4.누적매출");
             System.out.println("5.고객명단");
             System.out.println("6.뒤로가기");
-        	System.out.println("--------------------");
+        	System.out.println("*********************");
             String 선택 = sc.nextLine();          
             switch (선택) {
             case "1":
@@ -447,17 +472,19 @@ class Cafe{
 		menuNameList.add("바나나라떼");
 		menuPriceList.add(5000);
 		inventoryList.add(15);
+		customerNameList.add("홍길동");
+		customerAccountList.add(10000);
+		customerNameList.add("박병태");
+		customerAccountList.add(20000);
     } 
 //	처음시작할때 업체용인지 고객용인지 확인하기 위함
     public void who() {
     	java.util.Scanner sc = new java.util.Scanner(System.in);
     	boolean flag = true;
         while (flag) {
-        	System.out.println("--------------------");
-            System.out.println("1.고객용");
-            System.out.println("2.업체용");
-            System.out.println("3.종료");
-        	System.out.println("--------------------");
+        	System.out.println("*********************");
+            System.out.println("1.고객용 2.업체용 3.종료");
+        	System.out.println("*********************");
             String stringInput = sc.nextLine();
             switch (stringInput) {
             case "1":
