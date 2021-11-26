@@ -130,7 +130,6 @@ class Cafe{
     			} 	
     			
     		}System.out.println("없는 고객입니다. 다시 입력해주세요.");
-    		break;
 
         }
     }
