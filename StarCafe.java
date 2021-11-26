@@ -1,4 +1,4 @@
-package Cafe;
+package teamplay;
 
 import java.util.Scanner;
 import java.util.*;
@@ -28,7 +28,7 @@ class Cafe{
     private static List<Integer> orderMenuPrice = new ArrayList<>();
     
     
-    int saleMoney=0;
+    int saleMoney;
     
 
     	
@@ -55,26 +55,34 @@ class Cafe{
 	}
     //2.금액충전
     private static void moneyCharge() {
-
     	System.out.println("-------------------");
 		System.out.println("금액충전");
 		System.out.println("-------------------");
 		System.out.print("이름 : "); 
 		customerName = scanner.next();
-		
+		int x=0;
 		for(int i=0; i<customerNameList.size(); i++){
 			if(customerNameList.get(i).equals(customerName)) {
 				//입력받은 이름이 있으면 그 회원에게 충전
 				System.out.print("충전 금액: ");
 				customerAccount = scanner.nextInt();
 				customerAccountList.set(i,customerAccountList.get(i)+customerAccount);
+				System.out.println(customerNameList.get(i)+"님의 충전 후 잔액은"+ customerAccountList.get(i) +"원 입니다");
+				break;
 			}
 			else {
-				System.out.println("없는 회원입니다.");
-				return;
+				x++;
+				continue;
 			}
 		}
+		if(x==customerNameList.size()){
+			System.out.println(customerName+" 는 없는 사람입니다.");
+		}
     }
+    
+
+
+    
 
     //3.금액확인
     public void accountSee() {
@@ -91,7 +99,6 @@ class Cafe{
 					continue;
 			}
 		}
-//		System.out.println(x);
 		if(x==customerNameList.size()){
 			System.out.println("없는 회원입니다.");
 		}
@@ -112,12 +119,10 @@ class Cafe{
     				orderCustomerAccount += customerAccountList.get(i);
     				choiceMenu();
     				flag = false;
-    				
-    			} else {
-    				System.out.println("없는 고객입니다. 다시 입력해주세요.");
-    			    	
-    			}
-    			
+    				break;
+    			} 	
+    			System.out.println("없는 고객입니다. 다시 입력해주세요.");
+    
     		}
         }
     }
@@ -148,7 +153,6 @@ class Cafe{
               switch (finalInput) {
               case "1":
             	  customerAccountList.set(orderCustomerIndex, customerAccountList.get(orderCustomerIndex)-orderMenuPrice.stream().mapToInt(Integer::intValue).sum());
-            	 saleMoney=+ orderMenuPrice.stream().mapToInt(Integer::intValue).sum();
             	  System.out.println("결제가 완료되었습니다.");
             	  System.out.println("현재 남은 잔액은 " + customerAccountList.get(orderCustomerIndex)+"원 입니다." );
             	  System.out.println("감사합니다.");
@@ -156,7 +160,6 @@ class Cafe{
             	  orderCustomerAccount = 0;
             	  orderMenuName.removeAll(orderMenuName);
             	  orderMenuPrice.removeAll(orderMenuPrice);
-            	
             	  flag = false;
             	  break;
               case "2":
@@ -166,7 +169,6 @@ class Cafe{
               break;
            case "5":
         	    flag = false;
-        	    break;
            default:
                 System.out.println("잘못된 입력입니다");
             }
@@ -304,7 +306,7 @@ class Cafe{
 				System.out.print("재고 추가 수: ");
 				inventory = scanner.nextInt();
 				inventoryList.set(i,inventoryList.get(i)+inventory);		
-				System.out.println(menuNameList.get(i)+"의 개수는"+inventoryList.get(i) +"입니다");
+				System.out.println(menuNameList.get(i)+"의 개수는"+inventoryList.get(i) +"개 입니다");
 				break;
 			}
 				else {
@@ -325,8 +327,7 @@ class Cafe{
 	}
 	//4.총 매출액 확인
 	public void sales() {
-		
-		System.out.println("총 매출액은" +  saleMoney+"원입니다.");
+		System.out.println("총 매출액은" + saleMoney+"원 입니다.");
 	}
 	//5.고객명단
 	public void customerList() {
@@ -368,7 +369,6 @@ class Cafe{
                 break;
             default:
                 System.out.println("잘못된 입력입니다");
-                break;
             }
         }
     }
@@ -413,8 +413,6 @@ class Cafe{
         }
     }
     public void menupan(){
-//    	customerNameList.add("홍길동");
-//    	customerAccountList.add(10000);
 		menuNameList.add("아이스아메리카노");
 		menuPriceList.add(3000);
 		inventoryList.add(10);
