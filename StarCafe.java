@@ -36,6 +36,10 @@ class Cafe{
 
     //1.회원생성
     private static void accountrCreate() {
+    	if(customerNameList.size() == 0) {
+    		System.out.println("현재 회원이 없습니다.");
+    		return;
+    	}
 		System.out.println("-------------------");
 		System.out.println("회원등록");
 		System.out.println("-------------------");
@@ -352,6 +356,10 @@ public void addOrder() {
 	}
 	//5.고객명단
 	public void customerList() {
+		if(customerNameList.size() == 0) {
+    		System.out.println("현재 회원이 없습니다.");
+    		return;
+    	}
 		for(int i=0;i<customerNameList.size();i++){
 			System.out.println(customerNameList.get(i)+ ", "+ customerAccountList.get(i) +"원");
 		}
