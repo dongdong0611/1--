@@ -126,10 +126,11 @@ class Cafe{
     				orderCustomerAccount += customerAccountList.get(i);
     				choiceMenu();
     				flag = false;
-    				break;
+    				return;
     			} 	
     			
     		}System.out.println("없는 고객입니다. 다시 입력해주세요.");
+    		break;
 
         }
     }
@@ -182,7 +183,9 @@ class Cafe{
               } 
               break;
            case "5":
-        	    flag = false;
+        	   System.out.println("취소하셨습니다."); 
+        	   flag = false;
+        	    break;
            default:
                 System.out.println("잘못된 입력입니다");
             }
@@ -190,6 +193,9 @@ class Cafe{
 		}	
 	//4-1 장바구니에 담기
 	public void addOrder() {
+		if (orderMenuPrice.size() <= 0) {
+			orderMenuPrice.add(0);
+		}
 		java.util.Scanner sc = new java.util.Scanner(System.in);
     	boolean flag = true;
         while (flag) {
@@ -197,12 +203,20 @@ class Cafe{
 			for(int j=0; j<menuNameList.size(); j++) {
 				System.out.println((j+1)+"."+ menuNameList.get(j)+"  가격 :  " + menuPriceList.get(j)+"원");
 			}
-			System.out.println("----------------");
+			System.out.println("--------------------------------------");
 			System.out.println("메뉴를 선택해주세요.>>");
 			int selectNo=0;
 			selectNo = sc.nextInt();
-			
-				if(inventoryList.get(selectNo-1)>0 && orderMenuPrice.stream().mapToInt(Integer::intValue).sum()+menuPriceList.get(selectNo-1) <= orderCustomerAccount) {
+			if(menuNameList.size() <= (selectNo-1) || selectNo < 1) {
+				selectNo=0;
+				System.out.println("없는 메뉴입니다. 다시 선택하세요.");
+				continue;
+			}
+
+					if(inventoryList.get(selectNo-1)>0 && orderMenuPrice.stream().mapToInt(Integer::intValue).sum()+menuPriceList.get(selectNo-1) <= orderCustomerAccount) {	
+						if (orderMenuPrice.get(0) == 0) {
+								orderMenuPrice.remove(0);
+							}
 							orderMenuName.add(menuNameList.get(selectNo-1));
 							orderMenuPrice.add(menuPriceList.get(selectNo-1));
 							inventoryList.set(selectNo-1, inventoryList.get(selectNo-1)-1);
@@ -219,7 +233,7 @@ class Cafe{
 							System.out.println("잔액이 부족합니다.");
 							flag = false;
 							break;
-						}
+						} 
 				}
 				
 				
@@ -228,34 +242,39 @@ class Cafe{
    			
   
 	//4-2 장바구니 담기취소
-    public void deleteOrder() {
- 		java.util.Scanner sc = new java.util.Scanner(System.in);
-     	boolean flag = true;
-     	if(orderMenuName.size() != 0 ) {
-         while (flag) {
- 			System.out.println("현재 장바구니");
- 			for(int j=0; j<orderMenuName.size(); j++) {
- 				System.out.println((j+1)+"."+ orderMenuName.get(j)+"  가격 :  " + orderMenuPrice.get(j)+"원");
- 			}
- 			System.out.println("현재 장바구니 결제금액은 총 " + orderMenuPrice.stream().mapToInt(Integer::intValue).sum()+"원 입니다.");
- 			System.out.println("-------------------");
- 			System.out.println("빼실 메뉴를 선택해주세요.>>");
- 			int selectNo=0;
- 			selectNo = sc.nextInt();
- 				System.out.println(orderMenuName.get(selectNo-1)+"를 장바구니에서 뺐습니다.");
- 				inventoryList.set(menuNameList.indexOf(orderMenuName.get(selectNo-1)), inventoryList.get(selectNo-1)+1); 
- 				orderMenuName.remove(orderMenuName.get(selectNo-1));
- 				orderMenuPrice.remove(orderMenuPrice.get(selectNo-1)); 								
- 				System.out.println("현재 장바구니 결제금액은 총 " + orderMenuPrice.stream().mapToInt(Integer::intValue).sum()+"원 입니다.");
- 				System.out.println();
- 				flag = false;
- 				break;
-         } 
- 		} else {
- 			System.out.println("현재 장바구니에 아무것도 없습니다.");
- 			return;
- 		}
- 			}
+	  public void deleteOrder() {
+	 		java.util.Scanner sc = new java.util.Scanner(System.in);
+	     	boolean flag = true;
+	     	if(orderMenuName.size() != 0 ) {
+	         while (flag) {
+	 			System.out.println("현재 장바구니");
+	 			for(int j=0; j<orderMenuName.size(); j++) {
+	 				System.out.println((j+1)+"."+ orderMenuName.get(j)+"  가격 :  " + orderMenuPrice.get(j)+"원");
+	 			}
+	 			System.out.println("현재 장바구니 결제금액은 총 " + orderMenuPrice.stream().mapToInt(Integer::intValue).sum()+"원 입니다.");
+	 			System.out.println("--------------------------------------");
+	 			System.out.println("빼실 메뉴를 선택해주세요.>>");
+	 			int selectNo=0;
+	 			selectNo = sc.nextInt();
+	 			if(orderMenuName.size() <= (selectNo-1) || selectNo < 1) {
+					selectNo=0;
+					System.out.println("없는 메뉴입니다. 다시 선택하세요.");
+					continue;
+				}
+	 				System.out.println(orderMenuName.get(selectNo-1)+"를 장바구니에서 뺐습니다.");
+	 				inventoryList.set(menuNameList.indexOf(orderMenuName.get(selectNo-1)), inventoryList.get(selectNo-1)+1); 
+	 				orderMenuName.remove(orderMenuName.get(selectNo-1));
+	 				orderMenuPrice.remove(orderMenuPrice.get(selectNo-1)); 								
+	 				System.out.println("현재 장바구니 결제금액은 총 " + orderMenuPrice.stream().mapToInt(Integer::intValue).sum()+"원 입니다.");
+	 				System.out.println();
+	 				flag = false;
+	 				break;
+	         } 
+	 		} else {
+	 			System.out.println("현재 장바구니에 아무것도 없습니다.");
+	 			return;
+	 		}
+	 			}
  			
     //4-3 장바구니 확인
     public void checkOrder() {
