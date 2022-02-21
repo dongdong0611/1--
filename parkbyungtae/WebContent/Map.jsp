@@ -20,31 +20,12 @@ flex-grow: 1;
 <hr>
 <div style=" width:100%; display:flex; ">
 	<div id="left">
-		<button type="button" onclick="loadDoc('place/0001.txt', myFunction)">°ü±¤ÁöA</button><br>
-		<button type="button" onclick="loadDoc('place/0002.txt', myFunction)">¼÷¼ÒB </button><br>
-		<button type="button" onclick="loadDoc('place/0003.txt', myFunction)">À½½ÄÁ¡C</button><br>
-		<img src="image/sample.jpg">
+		<jsp:include page="showPlace.jsp" />
 	</div>
 	<div id="right">
-		
+		<p id='show'></p>
 	</div>
 </div>
-<script>
-function loadDoc(url, cFunction) {
-  var xhttp;
-  xhttp=new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      cFunction(this);
-    }
-  };
-  xhttp.open("GET", url, true);
-  xhttp.send();
-}
-function myFunction(xhttp) {
-  document.getElementById("right").innerHTML =
-  xhttp.responseText;
-}
-</script>
+
 </body>
 </html>
