@@ -8,7 +8,7 @@
 <style>
 div {border: 1px dotted black; display:inline-block;}
 #left {
- width: 75%; 
+ width: 25%; 
 }
 #right {
 flex-grow: 1;
@@ -20,7 +20,7 @@ flex-grow: 1;
 <hr>
 <div style=" width:100%; display:flex; ">
 	<div id="left">
-		<jsp:include page="showPlace.jsp" />
+		<jsp:include page="viewMemberList.jsp" />
 	</div>
 	<div id="right">
 		<p id='show'></p>
